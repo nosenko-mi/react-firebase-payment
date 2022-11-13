@@ -1,22 +1,28 @@
-import React from 'react';
-import {Route, Routes} from "react-router-dom";
+import React, {useContext} from 'react';
+import {Navigate, Route, Routes} from "react-router-dom";
 import Shop from "./Shop";
 import Login from "./Login";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {Context} from "../index";
+import Cart from "./Cart";
 
 const AppRouter = () => {
-    const user = false
+    const {auth} = useContext(Context)
+    const [user] = useAuthState(auth)
     return user ?
         (
             <Routes>
-                <Route path={"/shop"} element={<Shop />}/>
-                <Route path={"*"} element={<Shop />}/>
+                <Route key={"/shop"} path={"/shop"} element={<Shop />}/>
+                <Route key={"/cart"} path={"/cart"} element={<Cart />}/>
+                <Route key={"*"} path={"*"} element={<Navigate to="/shop"/>}/>
             </Routes>
         )
         :
         (
             <Routes>
-                <Route path={"/login"} element={<Login />}/>
-                <Route path={"*"} element={<Login />}/>
+                <Route key={"/shop"} path={"/shop"} element={<Shop />}/>
+                <Route key={"/login"} path={"/login"} element={<Login />}/>
+                <Route key={"*"} path={"*"} element={<Navigate to="/shop"/>}/>
             </Routes>
         )
 };

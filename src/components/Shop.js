@@ -59,8 +59,8 @@ const Shop = () => {
                     justifyContent="center"
                 >
                     {products.map(p => (
-                        <Grid item xs={3}>
-                            <Product key={p.name} name={p.name} description={p.description} price={p.price}/>
+                        <Grid key={p.id} item xs={3}>
+                            <Product key={p.id} product={p}/>
                         </Grid>
                     ))}
                 </Grid>
