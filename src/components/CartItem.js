@@ -40,8 +40,6 @@ const CartItem = (props) => {
                     </IconButton>
                 </Grid>
 
-
-
                 <Grid
                     display="flex"
                     flexDirection="row"
@@ -53,7 +51,7 @@ const CartItem = (props) => {
                     </IconButton>
 
                     <Typography variant="caption" color="text.secondary">
-                        amount
+                        {product.qty}
                     </Typography>
 
                     <IconButton aria-label="previous">
