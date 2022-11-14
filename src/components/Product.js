@@ -1,11 +1,23 @@
 import React from 'react';
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem} from "../redux/features/cart.feature";
 
 const Product = (props) => {
 
     const {product} = props
 
+    let dispatch = useDispatch()
+    // const cartItems = useSelector(state => state.cartItems)
+
+    let cartState = useSelector((store)=>{
+        return store["cart"]
+    })
+    let {cart} = cartState
+
     const addToCart = () => {
+        // dispatch(addItem({product}))
+        dispatch(addItem(product))
         console.log("added")
     }
 
