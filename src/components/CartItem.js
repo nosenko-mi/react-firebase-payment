@@ -4,7 +4,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import {useDispatch} from "react-redux";
-import {removeItem} from "../redux/features/cart.feature";
+import {changeQuantity, removeItem} from "../redux/features/cart.feature";
+import Dinero from "dinero.js";
 
 const CartItem = (props) => {
 
@@ -12,9 +13,29 @@ const CartItem = (props) => {
 
     let dispatch = useDispatch()
 
+    let price = Dinero({ amount: product.price, currency: "UAH" })
+    let totalPrice = price.multiply(product.qty)
+
+    price.toFormat('$0,0.0')
+    totalPrice.toFormat('$0,0.0')
+
+    // const cartState = useSelector((store)=>{
+    //     return store["cart"]
+    // })
+
     const removeFromCart = () => {
         dispatch(removeItem(product.id))
         // dispatch(removeItem({product}))
+    }
+
+    const increaseQty = () => {
+        dispatch(changeQuantity({id: product.id, qty: product.qty + 1}))
+    }
+
+    const decreaseQty = () => {
+        if (product.qty > 1){
+            dispatch(changeQuantity({id: product.id, qty: product.qty - 1}))
+        }
     }
 
     return (
@@ -46,7 +67,10 @@ const CartItem = (props) => {
                     alignItems="center"
                 >
 
-                    <IconButton aria-label="previous">
+                    <IconButton
+                        onClick={decreaseQty}
+                        aria-label="previous"
+                    >
                         <RemoveIcon/>
                     </IconButton>
 
@@ -54,7 +78,10 @@ const CartItem = (props) => {
                         {product.qty}
                     </Typography>
 
-                    <IconButton aria-label="previous">
+                    <IconButton
+                        onClick={increaseQty}
+                        aria-label="previous"
+                    >
                         <AddIcon/>
                     </IconButton>
                 </Grid>
@@ -66,11 +93,11 @@ const CartItem = (props) => {
                     justifyContent="space-between"
                 >
                     <Typography variant="body2" color="text.secondary">
-                        Item price: {product.price} UAH
+                        Item price: {price.setLocale("uk-UA").toFormat('$0,0.00')}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                        Total: {product.price} UAH
+                        Total: {totalPrice.setLocale("uk-UA").toFormat('$0,0.00')}
                     </Typography>
                 </Grid>
 
