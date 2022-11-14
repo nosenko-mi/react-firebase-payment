@@ -74,33 +74,6 @@ const CartItem = (props) => {
                     </Typography>
                 </Grid>
 
-                {/*<Stack direction="row" spacing={1} >*/}
-
-                {/*    <IconButton aria-label="previous">*/}
-                {/*        <RemoveIcon/>*/}
-                {/*    </IconButton>*/}
-
-                {/*    <Typography variant="caption" color="text.secondary">*/}
-                {/*        amount*/}
-                {/*    </Typography>*/}
-
-                {/*    <IconButton aria-label="previous">*/}
-                {/*        <AddIcon/>*/}
-                {/*    </IconButton>*/}
-                {/*</Stack>*/}
-
-                {/*<Stack direction="row" spacing={2}>*/}
-                {/*    <Typography variant="body2" color="text.secondary">*/}
-                {/*        Item price: {product.price} UAH*/}
-                {/*    </Typography>*/}
-
-                {/*    <Typography variant="body2" color="text.secondary">*/}
-                {/*        Total: {product.price} UAH*/}
-                {/*    </Typography>*/}
-                {/*</Stack>*/}
-
-
-
             </CardContent>
         </Card>
     );

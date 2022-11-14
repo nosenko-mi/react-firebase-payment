@@ -6,8 +6,6 @@ import CheckoutCard from "./CheckoutCard";
 
 const Cart = () => {
 
-    // const items = useSelector(state => state.cartItems)
-
     // get the store data from redux
     let cartState = useSelector((store)=>{
         return store["cart"]
@@ -32,8 +30,6 @@ const Cart = () => {
                         <Grid key="left inner">
                             {cartItems.map(item =>(
                                 <CartItem key={item.id} product={item}/>
-                                // TODO problem somewhere here:
-                                // <CartItem key={item.product.id} product={item.product}/>
                                 ))}
                         </Grid>
                         :

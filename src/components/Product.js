@@ -8,21 +8,16 @@ const Product = (props) => {
     const {product} = props
 
     const dispatch = useDispatch()
-    // const cartItems = useSelector(state => state.cartItems)
 
     const cartState = useSelector((store)=>{
         return store["cart"]
     })
     console.log(cartState)
-    // let {cart} = cartState
 
     //works locally
     const [isInCart, setInCart] = useState(cartState.cartItems.some(p => p.id === product.id))
 
     const handleClick = () => {
-        // dispatch(addItem(product))
-        // console.log("added")
-
         //new
         setInCart(!isInCart)
 
@@ -39,45 +34,9 @@ const Product = (props) => {
             setInCart(!isInCart)
 
             dispatch(addItem(product))
-
-            // dispatch(addItem({
-            //     id: product.id,
-            //     price: product.price,
-            //     amount: product.amount,
-            //     name: product.name,
-            //     description: product.description,
-            //     version: product.version,
-            //     active: product.active,
-            //     inCart: isInCart,
-            //     qty: 1
-            // }))
         }
 
-        // useless
-        // dispatch(addItem({product, quantity}))
     }
-
-    // useEffect(() => {
-    //     console.log(" effect " + isInCart.toString())
-    //
-    //     if (isInCart){
-    //         dispatch(removeItem(product.id))
-    //     }
-    //     else {
-    //         dispatch(addItem({
-    //             id: product.id,
-    //             price: product.price,
-    //             amount: product.amount,
-    //             name: product.name,
-    //             description: product.description,
-    //             version: product.version,
-    //             active: product.active,
-    //             inCart: isInCart
-    //         }))
-    //     }
-    // }, [isInCart])
-
-
 
     return (
         <Card sx={{ maxWidth: 200 }}>
@@ -91,45 +50,12 @@ const Product = (props) => {
                     {product.description}
                 </Typography>
 
-                {/*<Grid*/}
-                {/*    display="flex"*/}
-                {/*    flexDirection="row"*/}
-                {/*    alignItems="center"*/}
-                {/*>*/}
-                {/*    <IconButton onClick={decItem} aria-label="previous">*/}
-                {/*        <RemoveIcon/>*/}
-                {/*    </IconButton>*/}
-
-                {/*    <Typography variant="caption" color="text.secondary">*/}
-                {/*        {quantity}*/}
-                {/*    </Typography>*/}
-
-                {/*    <IconButton onClick={incItem} aria-label="previous">*/}
-                {/*        <AddIcon/>*/}
-                {/*    </IconButton>*/}
-                {/*</Grid>*/}
-
                 <Typography variant="body2" color="text.secondary">
                     {product.price} UAH
                 </Typography>
 
             </CardContent>
             <CardActions>
-                {/*<Button*/}
-                {/*    onClick={handleClick}*/}
-                {/*    size="small"*/}
-                {/*    variant="contained"*/}
-                {/*    color={isInCart ? "success" : "primary"}*/}
-                {/*>*/}
-                {/*    /!*{isInCart ? "In cart" : "Add to cart"}*!/*/}
-
-                {/*    {cartState.cartItems.some(p => p.id === product.id) ?*/}
-                {/*        "In cart"*/}
-                {/*        :*/}
-                {/*        "Add to cart"*/}
-                {/*    }*/}
-                {/*</Button>*/}
-
 
                 {
                     cartState.cartItems.some(p => p.id === product.id) ?
