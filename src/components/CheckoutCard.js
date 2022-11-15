@@ -101,13 +101,17 @@ const CheckoutCard = () => {
                 </Stack>
 
             </CardContent>
-            <CardActions>
+            <CardActions
+                disableSpacing
+            >
                 <Button
-
                     onClick={() => {console.log("pay")}}
+                    fullWidth={true}
                     size="small"
                     variant="contained"
-                >Pay</Button>
+                >
+                    Pay
+                </Button>
             </CardActions>
         </Card>
     );

@@ -42,7 +42,6 @@ const CartItem = (props) => {
 
         <Card sx={{ minWidth: 400,  minHeight: 100}}>
             <CardContent>
-
                 <Grid
                     display="flex"
                     flexDirection="row"
