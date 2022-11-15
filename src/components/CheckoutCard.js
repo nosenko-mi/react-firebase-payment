@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     Card,
@@ -17,12 +17,9 @@ const CheckoutCard = () => {
     const STRIPE_PAYMENT = "stripe"
     const LIQPAY_PAYMENT = "liqpay"
     const [paymentType, setPaymentType] = useState(STRIPE_PAYMENT)
-
-    const handlePaymentType = (event, newPaymentType) => {
-        if (newPaymentType !== null) {
-            setPaymentType(newPaymentType);
-        }
-    }
+    const initTotalState =  Dinero({ amount: 0, currency: "UAH" }).multiply(1)
+    // Dinero({ amount: 0, currency: "UAH" })
+    const [totalPrice, setTotalPrice] = useState(initTotalState)
 
     // get the store data from redux
     let cartState = useSelector((store)=>{
@@ -30,26 +27,33 @@ const CheckoutCard = () => {
     })
     let {cartItems} = cartState
 
-    let prices = cartItems.map((item) => (
-        item = { name: item.name, price: Dinero({ amount: item.price, currency: "UAH" }).multiply(item.qty)}
-    ))
+    const handlePaymentType = (event, newPaymentType) => {
+        if (newPaymentType !== null) {
+            setPaymentType(newPaymentType);
+        }
+    }
 
-    console.log(prices)
+    useEffect(() => {
 
-    let totalPrice = prices.reduce((accumulator, object) => {
-        return accumulator.price.add(object.price)
-    })
+        let prices = cartItems.map((item) => (
+            // item = { name: item.name, price: Dinero({ amount: item.price, currency: "UAH" }).multiply(item.qty)}
+            Dinero({ amount: item.price, currency: "UAH" }).multiply(item.qty)
+        ))
+        console.log(prices)
+
+        setTotalPrice(
+            prices.reduce((acc, object) => (
+                acc.add(object)
+            ), Dinero({ amount: 0, currency: "UAH" }).multiply(1)
+            )
+
+        );
+    }, [cartItems]);
+
+    console.log("total")
+    console.log(typeof totalPrice)
     console.log(totalPrice)
 
-
-    //
-    // {cartItems.map(item =>(
-    //     <Typography variant="caption" color="text.secondary">
-    //         {item.name}: {item.price}
-    //     </Typography>
-    //
-    //     // <CartItem key={item.id} product={item}/>
-    // ))}
 
     return (
         <Card sx={{ minWidth: 200, minHeight: 300 }}>
@@ -60,29 +64,29 @@ const CheckoutCard = () => {
                         Checkout
                     </Typography>
 
+                    {/*{cartItems.length > 0 ?*/}
+                    {/*    <Stack key={cartItems.keys().next().value}>*/}
+                    {/*        {cartItems.map(item =>(*/}
+                    {/*            <Typography key={item.name} variant="caption" color="text.secondary">*/}
+                    {/*                {item.name}: {item.price}*/}
+                    {/*            </Typography>*/}
+
+                    {/*            // <CartItem key={item.id} product={item}/>*/}
+                    {/*        ))}*/}
+                    {/*    </Stack>*/}
+                    {/*    :*/}
+                    {/*    <div>cart is empty</div>*/}
+                    {/*}*/}
 
                     {cartItems.length > 0 ?
                         <Stack key="left inner">
-                            {prices.map(item =>(
-                                <Typography key={item.name} variant="caption" color="text.secondary">
-                                    {item.name}: {item.price.setLocale("uk-UA").toFormat('$0,0.00')}
-                                </Typography>
-
-                                // <CartItem key={item.id} product={item}/>
-                            ))}
+                            <Typography variant="body1" color="text.secondary">
+                                Total: {totalPrice.setLocale("uk-UA").toFormat('$0,0.00')}
+                            </Typography>
                         </Stack>
                         :
                         <div>cart is empty</div>
                     }
-
-
-                    {/*<Typography variant="caption" color="text.secondary">*/}
-                    {/*    item: 12*/}
-                    {/*</Typography>*/}
-
-                    <Typography variant="body2" color="text.secondary">
-                        Total: {totalPrice.setLocale("uk-UA").toFormat('$0,0.00')}
-                    </Typography>
 
                     <ToggleButtonGroup
                         value={paymentType}
