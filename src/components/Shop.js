@@ -1,13 +1,28 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
 import {useCollectionData} from "react-firebase-hooks/firestore";
-import Loader from "./Loader";
-import {Box, Button, Container, Grid, Stack} from "@mui/material";
+import {Box, Container, Grid} from "@mui/material";
 import Product from "./Product";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem} from "../redux/features/cart.feature";
+import Loader from "./Loader";
 
 const Shop = () => {
 
+    let dispatch = useDispatch()
+    // const cartItems = useSelector(state => state.cartItems)
+
+    let cartState = useSelector((store)=>{
+        return store["cart"]
+    })
+    // let {cart} = cartState
+
+    const addProductToCart = (id) => {
+        dispatch(addItem(id))
+    }
+
     const{auth, firestore} = useContext(Context)
+
     const [products, loading] = useCollectionData(
         firestore.collection("products")
     )
