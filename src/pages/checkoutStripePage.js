@@ -18,7 +18,7 @@ const CheckoutStripePage = () => {
         return store["cart"]
     })
     let {cartItems} = cartState
-    const initTotalState =  Dinero({ amount: 0, currency: "UAH" }).multiply(1)
+    const initTotalState =  Dinero({ amount: 0, currency: "USD" }).multiply(1)
     const [totalPrice, setTotalPrice] = useState(initTotalState)
 
 
