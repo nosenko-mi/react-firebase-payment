@@ -64,6 +64,7 @@ const Product = (props) => {
                             size="small"
                             variant="contained"
                             color="success"
+                            fullWidth={true}
                         >
                             In cart
                         </Button>
@@ -73,6 +74,7 @@ const Product = (props) => {
                             size="small"
                             variant="contained"
                             color="primary"
+                            fullWidth={true}
                         >
                             Add to cart
                         </Button>
