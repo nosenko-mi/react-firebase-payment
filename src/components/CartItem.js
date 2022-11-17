@@ -13,7 +13,7 @@ const CartItem = (props) => {
 
     let dispatch = useDispatch()
 
-    let price = Dinero({ amount: product.price, currency: "UAH" })
+    let price = Dinero({ amount: product.price, currency: "USD" })
     let totalPrice = price.multiply(product.qty)
 
     price.toFormat('$0,0.0')
