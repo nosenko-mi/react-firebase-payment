@@ -47,7 +47,7 @@ const Cart = () => {
                 {/*</Grid>*/}
 
                 <Grid
-                    key="right"
+                    key="left"
                     display="flex"
                     justifyContent="center"
                     item
