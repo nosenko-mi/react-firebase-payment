@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {AppBar, Button, Grid, Toolbar} from "@mui/material";
 import {NavLink} from "react-router-dom";
-import {CART_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/routeConsts";
+import {CART_ROUTE, HISTORY_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/routeConsts";
 import {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
 
@@ -17,6 +17,9 @@ const Navbar = () => {
                 <Grid container justifyContent={"flex-end"}>
                     <NavLink to={CART_ROUTE} style={{textDecoration: "none", color: "inherit"}}>
                         <Button variant="outlined"  color="inherit">Cart</Button>
+                    </NavLink>
+                    <NavLink to={HISTORY_ROUTE} style={{textDecoration: "none", color: "inherit"}}>
+                        <Button variant="outlined"  color="inherit">History</Button>
                     </NavLink>
                     {user ?
                         <Button onClick={() => auth.signOut()} variant="outlined" color="inherit">Log out</Button>
