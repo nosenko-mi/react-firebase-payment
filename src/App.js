@@ -16,6 +16,8 @@ function App() {
         return <Loader/>
     }
 
+
+
     return (
         <BrowserRouter>
             <Navbar/>
