@@ -32,16 +32,14 @@ axios.defaults.baseURL = 'http://localhost:5000/react-firebase-payment/us-centra
 // })
 
 firebase.initializeApp({
-    apiKey: "AIzaSyDW7QOd2R7oz9_DAt88IAhGCZE6PlDGmzM",
-    authDomain: "react-firebase-payment.firebaseapp.com",
-    projectId: "react-firebase-payment",
-    storageBucket: "react-firebase-payment.appspot.com",
-    messagingSenderId: "824400707925",
-    appId: "1:824400707925:web:ddd359e66526ef088f6fdc",
-    measurementId: "G-LHQSKQXP8K"
+    apiKey: process.env.REACT_APP_FIREBASE_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
-
-
 
 export const Context = createContext(null)
 
