@@ -74,9 +74,9 @@ const Login = () => {
                 >
                     <Box textAlign="center">
                         <Stack spacing={3}>
-
                             <Stack spacing={1}>
                                 <TextField
+                                    size="small"
                                     id="email"
                                     label="Email"
                                     type="email"
@@ -85,16 +85,22 @@ const Login = () => {
                                     setLoginEmail(e.target.value);
                                 }} />
 
-                                <TextField   id="password" label="Password" type="password" placeholder="Password"           onChange={(event) => {
+                                <TextField
+                                    size="small"
+                                    id="password"
+                                    label="Password"
+                                    type="password"
+                                    placeholder="Password"
+                                    onChange={(event) => {
                                     setLoginPassword(event.target.value);
                                 }}/>
 
-                                <Button onClick={signInEmailPassword}>Log in</Button>
+                                <Button onClick={signInEmailPassword} variant="contained">Log in</Button>
                             </Stack>
 
                             <Typography variant="body2">Don't have an account? <NavLink to="/register">Create one</NavLink> </Typography>
                             <Typography variant="body2">or</Typography>
-                            <Button onClick={signInGoogle} variant={"contained"}>Sign in with Google</Button>
+                            <Button onClick={signInGoogle} variant="contained">Sign in with Google</Button>
                         </Stack>
 
                     </Box>
