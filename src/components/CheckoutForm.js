@@ -37,15 +37,18 @@ export default function CheckoutForm() {
                     setMessage("Something went wrong.");
                     break;
             }
+            console.log(paymentIntent.status)
         });
     }, [stripe]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("clicked")
 
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
+            console.log("Stripe.js has not yet loaded.")
             return;
         }
 
@@ -88,6 +91,7 @@ export default function CheckoutForm() {
                     variant="contained"
                     disabled={isLoading || !stripe || !elements}
                     id="submit"
+                    type="submit"
                 >
                 <span id="button-text">
                   {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
