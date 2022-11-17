@@ -1,3 +1,5 @@
 export const LOGIN_ROUTE = '/login'
 export const SHOP_ROUTE = '/shop'
 export const CART_ROUTE = '/cart'
+export const HISTORY_ROUTE = '/history'
+export const STRIPE_ROUTE = '/stripeCheckout'
