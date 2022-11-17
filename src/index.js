@@ -7,6 +7,10 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth"
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import axios from "axios";
+
+// axios.defaults.baseURL = 'https://us-central1-react-firebase-payment.cloudfunctions.net/api';
+axios.defaults.baseURL = 'http://localhost:5000/react-firebase-payment/us-central1/api';
 
 // const defaultState ={
 //     cartItems: []
@@ -57,5 +61,4 @@ root.render(
             </React.StrictMode>
         </Provider>
     </Context.Provider>
-
 );
