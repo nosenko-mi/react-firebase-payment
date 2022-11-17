@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import {useSelector} from "react-redux";
 import Dinero from "dinero.js";
+import {useNavigate} from "react-router-dom";
 
 const CheckoutCard = () => {
 
     const STRIPE_PAYMENT = "stripe"
     const LIQPAY_PAYMENT = "liqpay"
+    const navigate = useNavigate();
     const [paymentType, setPaymentType] = useState(STRIPE_PAYMENT)
     const initTotalState =  Dinero({ amount: 0, currency: "UAH" }).multiply(1)
     // Dinero({ amount: 0, currency: "UAH" })
@@ -37,14 +39,14 @@ const CheckoutCard = () => {
 
         let prices = cartItems.map((item) => (
             // item = { name: item.name, price: Dinero({ amount: item.price, currency: "UAH" }).multiply(item.qty)}
-            Dinero({ amount: item.price, currency: "UAH" }).multiply(item.qty)
+            Dinero({ amount: item.price, currency: "USD" }).multiply(item.qty)
         ))
         console.log(prices)
 
         setTotalPrice(
             prices.reduce((acc, object) => (
                 acc.add(object)
-            ), Dinero({ amount: 0, currency: "UAH" }).multiply(1)
+            ), Dinero({ amount: 0, currency: "USD" }).multiply(1)
             )
 
         );
@@ -54,9 +56,13 @@ const CheckoutCard = () => {
     console.log(typeof totalPrice)
     console.log(totalPrice)
 
+    const goToPayment = () => {
+        console.log("toPayment")
+        navigate("/checkoutStripe")
+    }
 
     return (
-        <Card sx={{ minWidth: 200, minHeight: 300 }}>
+        <Card sx={{ minWidth: 200}}>
             <CardContent>
 
                 <Stack spacing={4}>
@@ -105,10 +111,11 @@ const CheckoutCard = () => {
                 disableSpacing
             >
                 <Button
-                    onClick={() => {console.log("pay")}}
+                    onClick={goToPayment}
                     fullWidth={true}
                     size="small"
                     variant="contained"
+                    disabled={cartItems.length === 0}
                 >
                     Pay
                 </Button>
