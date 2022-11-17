@@ -51,7 +51,7 @@ const Product = (props) => {
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
-                    {product.price} UAH
+                    {product.price/100} {product.currency}
                 </Typography>
 
             </CardContent>
