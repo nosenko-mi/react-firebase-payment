@@ -98,7 +98,10 @@ const CheckoutStripePage = () => {
                         )}
                         <Divider/>
                         <Typography variant="body2">
-                            test card: 4242 4242 4242 4242
+                            Success card: 4242424242424242
+                        </Typography>
+                        <Typography variant="body2">
+                            Error card: 4000000000000002
                         </Typography>
                     </Stack>
                 </Grid>
