@@ -5,13 +5,14 @@ import {loadStripe} from "@stripe/stripe-js";
 import {Box, Container, Divider, Grid, Stack, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import Dinero from "dinero.js";
-import {Context} from "../index";
+import baseUrl, {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
 
 // Make sure to call loadStripe outside a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe("pk_test_51M1ZzXAmva4q0cWXglLg3mdtR7dtF1qTjPhJdABWDqlmxJh1Q9utaE2qqS4URVw6tOBMDevZxGEaMAc4Onpn5mJf00OGi5PG54");
+
 
 const CheckoutStripePage = () => {
 
@@ -52,7 +53,7 @@ const CheckoutStripePage = () => {
         //     })
 
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5000/react-firebase-payment/us-central1/api/create-payment-intent", {
+        fetch(baseUrl+"/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ items: cartItems, customer: user }),
