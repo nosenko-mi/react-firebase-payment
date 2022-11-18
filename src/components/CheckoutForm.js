@@ -6,6 +6,8 @@ export default function CheckoutForm() {
     const stripe = useStripe();
     const elements = useElements();
 
+
+
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -23,6 +25,7 @@ export default function CheckoutForm() {
         }
 
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
@@ -37,7 +40,6 @@ export default function CheckoutForm() {
                     setMessage("Something went wrong.");
                     break;
             }
-            console.log(paymentIntent.status)
         });
     }, [stripe]);
 
