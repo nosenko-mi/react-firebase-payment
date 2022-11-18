@@ -58,7 +58,9 @@ const CheckoutStripePage = () => {
             body: JSON.stringify({ items: cartItems, customer: user }),
         })
             .then((res) => res.json())
-            .then((data) => setClientSecret(data.clientSecret));
+            .then((data) => {
+                setClientSecret(data.clientSecret)
+            });
 
     }, []);
 
@@ -93,6 +95,10 @@ const CheckoutStripePage = () => {
                                 <CheckoutForm />
                             </Elements>
                         )}
+                        <Divider/>
+                        <Typography variant="body2">
+                            test card: 4242 4242 4242 4242
+                        </Typography>
                     </Stack>
                 </Grid>
             </Box>
