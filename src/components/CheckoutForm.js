@@ -1,9 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
-import {PaymentElement, useStripe, useElements} from "@stripe/react-stripe-js";
+import React, {useEffect, useState} from "react";
+import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Box, Button} from "@mui/material";
-import baseUrl, {Context} from "../index";
-import {useAuthState} from "react-firebase-hooks/auth";
-import {Navigate, redirect, useNavigate} from "react-router-dom";
+import baseUrl from "../index";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 export default function CheckoutForm() {
@@ -14,9 +13,6 @@ export default function CheckoutForm() {
         return store["cart"]
     })
     let {cartItems} = cartState
-
-    const {auth} = useContext(Context)
-    const [user] = useAuthState(auth)
 
     const navigate = useNavigate();
 
@@ -68,18 +64,7 @@ export default function CheckoutForm() {
 
         setIsLoading(true);
 
-
-        // fetch("http://localhost:5000/react-firebase-payment/us-central1/api/retrieve-payment-intent", {
-        //     method: "GET",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({ clientSecret }),
-        // })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         setClientSecret(data.clientSecret)
-        //         setExtra(data.extra)
-        //     });
-
+        // previous attempt. Use as reference
         // const { error } = await stripe.confirmPayment({
         //     elements,
         //     confirmParams: {
@@ -146,53 +131,7 @@ export default function CheckoutForm() {
             }
         }
 
-        // if (error.type === "card_error" || error.type === "validation_error") {
-        //     setMessage(error.message);
-        // } else {
-        //     console.log(error.type)
-        //     console.log(error)
-        //     setMessage("An unexpected error occurred.");
-        // }
-        // if (paymentIntent){
-        //     switch (paymentIntent.status) {
-        //         case "succeeded":
-        //             setMessage("Payment succeeded!");
-        //             saveTransaction(paymentIntent).then()
-        //             navigate('/success')
-        //             break;
-        //         case "processing":
-        //             setMessage("Your payment is processing.");
-        //             saveTransaction(paymentIntent).then()
-        //             break;
-        //         case "requires_payment_method":
-        //             setMessage("Your payment was not successful, please try again.");
-        //             break;
-        //         default:
-        //             setMessage("Something went wrong.");
-        //             break;
-        //     }
-        // }
-
-
-
-
         setIsLoading(false);
-
-    // //    custom:
-    //     const result = await stripe.updatePaymentIntent({
-    //         elements,
-    //         params: {
-    //             payment_method_data: {
-    //                 billing_details: {
-    //                     email: user.email,
-    //                     name: user.displayName
-    //                 },
-    //                 customer: user
-    //             },
-    //         }
-    //     });
-    //
-    //     await stripePaymentMethodHandler(result);
     };
 
     const saveTransaction = async (intent) => {
@@ -209,53 +148,6 @@ export default function CheckoutForm() {
             body: JSON.stringify({transaction: _transaction})
         }).then();
     }
-
-    const stripePaymentMethodHandler = async (result) => {
-        if (result.error) {
-            // Show error in payment form
-        } else {
-            // Otherwise send paymentIntent.id to your server
-            const res = await fetch('http://localhost:5000/react-firebase-payment/us-central1/api/custom-payment-stripe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    payment_intent_id: result.paymentIntent.id,
-                })
-            });
-
-            const paymentResponse = await res.json();
-
-            // Handle server response (see Step 7)
-            await handleServerResponse(paymentResponse);
-        }
-    }
-
-    const handleServerResponse = async (response) => {
-        if (response.error) {
-            // Show error from server on payment form
-        } else if (response.requires_action) {
-            // Use Stripe.js to handle the required next action
-            const {
-                error: errorAction,
-                paymentIntent
-            } = await stripe.handleNextAction({
-                clientSecret: response.payment_intent_client_secret
-            });
-
-
-            if (errorAction) {
-                // Show error from Stripe.js in payment form
-                setMessage(errorAction.toString())
-            } else {
-                // Actions handled, show success message
-                setMessage("Success")
-            }
-        } else {
-            // No actions needed, show success message
-            setMessage("Success")
-        }
-    }
-
 
 
     return (
