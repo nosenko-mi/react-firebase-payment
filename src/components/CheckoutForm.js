@@ -3,7 +3,9 @@ import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Box, Button} from "@mui/material";
 import baseUrl from "../index";
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {clearCart} from "../redux/features/cart.feature";
+
 
 export default function CheckoutForm() {
     const stripe = useStripe();
@@ -13,6 +15,7 @@ export default function CheckoutForm() {
         return store["cart"]
     })
     let {cartItems} = cartState
+    let dispatch = useDispatch()
 
     const navigate = useNavigate();
 
@@ -116,11 +119,13 @@ export default function CheckoutForm() {
                 case "succeeded":
                     setMessage("Payment succeeded!");
                     saveTransaction(paymentIntent).then()
+                    dispatch(clearCart())
                     navigate('/success')
                     break;
                 case "processing":
                     setMessage("Your payment is processing.");
                     saveTransaction(paymentIntent).then()
+                    dispatch(clearCart())
                     break;
                 case "requires_payment_method":
                     setMessage("Your payment was not successful, please try again.");
