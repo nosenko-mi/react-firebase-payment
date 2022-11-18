@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {PaymentElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import {Box, Button} from "@mui/material";
-import {Context} from "../index";
+import baseUrl, {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {Navigate, redirect, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -112,20 +112,21 @@ export default function CheckoutForm() {
                 return_url: "http://localhost:3000/success",
             },
             redirect: "if_required"
-        }).then()
-            .catch((e) => {
-            setMessage(e.message);
         });
 
         // when redirect: "if_required" you should manage redirect by yourself
-        if (error.type === "card_error" || error.type === "validation_error") {
-            setMessage(error.message);
-        } else {
-            console.log(error.type)
-            console.log(error)
-            setMessage("An unexpected error occurred.");
-        }
-        if (paymentIntent){
+        //TODO refactor this
+        if (error) {
+            // Handle error here
+            if (error.type === "card_error" || error.type === "validation_error") {
+                setMessage(error.message);
+            } else {
+                console.log(error.type)
+                console.log(error)
+                setMessage("An unexpected error occurred.");
+            }
+        } else if (paymentIntent) {
+            // Handle successful payment here
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
@@ -144,6 +145,33 @@ export default function CheckoutForm() {
                     break;
             }
         }
+
+        // if (error.type === "card_error" || error.type === "validation_error") {
+        //     setMessage(error.message);
+        // } else {
+        //     console.log(error.type)
+        //     console.log(error)
+        //     setMessage("An unexpected error occurred.");
+        // }
+        // if (paymentIntent){
+        //     switch (paymentIntent.status) {
+        //         case "succeeded":
+        //             setMessage("Payment succeeded!");
+        //             saveTransaction(paymentIntent).then()
+        //             navigate('/success')
+        //             break;
+        //         case "processing":
+        //             setMessage("Your payment is processing.");
+        //             saveTransaction(paymentIntent).then()
+        //             break;
+        //         case "requires_payment_method":
+        //             setMessage("Your payment was not successful, please try again.");
+        //             break;
+        //         default:
+        //             setMessage("Something went wrong.");
+        //             break;
+        //     }
+        // }
 
 
 
@@ -175,7 +203,7 @@ export default function CheckoutForm() {
             items: cartItems
         }
         //save transaction to firestore
-        fetch('http://localhost:5000/react-firebase-payment/us-central1/api/save-transaction', {
+        fetch(baseUrl + '/save-transaction', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({transaction: _transaction})
