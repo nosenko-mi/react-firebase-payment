@@ -1,6 +1,6 @@
 import {LOGIN_ROUTE, SHOP_ROUTE} from "./utils/routeConsts";
 import Login from "./components/Login";
-import Shop from "./components/Shop";
+import ShopPage from "./pages/shopPage";
 
 export const publicRoutes = [
     {
@@ -12,6 +12,6 @@ export const publicRoutes = [
 export const privateRoutes = [
     {
         path: SHOP_ROUTE,
-        Component: <Shop/>
+        Component: <ShopPage/>
     }
 ]
