@@ -1,19 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import baseUrl, {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {
-    Box,
-    Container,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography
-} from "@mui/material";
+import {Box, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Row from "../components/Row";
+import Loader from "../components/Loader";
 
 const HistoryPage = () => {
 
@@ -21,6 +11,14 @@ const HistoryPage = () => {
     const [user] = useAuthState(auth)
 
     const [rows, setRows] = useState([])
+
+    // const [transactions, loading] = useCollectionData(
+    //     firestore.collection("products")
+    // )
+    //
+    // if (loading){
+    //     return <Loader/>
+    // }
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
@@ -45,29 +43,32 @@ const HistoryPage = () => {
                 alignItems="center"
                 minHeight="90vh"
             >
-                <TableContainer component={Paper}>
-                    <Table aria-label="collapsible table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell />
-                                <TableCell>Date</TableCell>
-                                <TableCell align="right">Status</TableCell>
-                                <TableCell align="right">Total price($)</TableCell>
-                            </TableRow>
-                        </TableHead>
+                {rows.length > 0 ?
+                    <>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="collapsible table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell />
+                                        <TableCell>Date</TableCell>
+                                        <TableCell align="right">Status</TableCell>
+                                        <TableCell align="right">Total price($)</TableCell>
+                                    </TableRow>
+                                </TableHead>
 
-                        {rows.length > 0 ?
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <Row key={row.paymentIntent.id} row={row} />
-                                ))}
-                            </TableBody>
-                            :
-                            <Typography>Loading../</Typography>
-                        }
+                                <TableBody>
+                                    {rows.map((row) => (
+                                        <Row key={row.paymentIntent.id} row={row} />
+                                    ))}
+                                </TableBody>
 
-                    </Table>
-                </TableContainer>
+                            </Table>
+                        </TableContainer>
+                    </>
+                    :
+                    <Loader/>
+                }
+
             </Box>
         </Container>
 
