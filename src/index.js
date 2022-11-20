@@ -9,29 +9,10 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import axios from "axios";
 
-// axios.defaults.baseURL = 'https://us-central1-react-firebase-payment.cloudfunctions.net/api';
+// const baseUrl = 'http://localhost:5000/react-firebase-payment/us-central1/api'
 const baseUrl = 'https://us-central1-react-firebase-payment.cloudfunctions.net/api'
 axios.defaults.baseURL = baseUrl;
 export default baseUrl;
-
-// const defaultState ={
-//     cartItems: []
-// }
-//
-// const cartReducer = (state = defaultState, action) => {
-//     switch (action.type){
-//         case "ADD_PRODUCT":
-//             return {...state, cartItems: [...state.cartItems, action.payload]}
-//         case "REMOVE_PRODUCT":
-//             return
-//         default:
-//             return state
-//     }
-// }
-//
-// const store = configureStore({
-//     reducer: cartReducer
-// })
 
 firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
