@@ -12,6 +12,7 @@ import {
 import {useSelector} from "react-redux";
 import Dinero from "dinero.js";
 import {useNavigate} from "react-router-dom";
+import {STRIPE_ROUTE} from "../utils/routeConsts";
 
 const CheckoutCard = () => {
 
@@ -58,7 +59,7 @@ const CheckoutCard = () => {
 
     const goToPayment = () => {
         console.log("toPayment")
-        navigate("/checkoutStripe")
+        navigate(STRIPE_ROUTE)
     }
 
     return (
