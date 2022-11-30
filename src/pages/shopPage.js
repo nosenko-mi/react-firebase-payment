@@ -10,7 +10,7 @@ const ShopPage = () => {
     const{firestore} = useContext(Context)
 
     const [products, loading] = useCollectionData(
-        firestore.collection("products")
+        firestore.collection("fake_products")
     )
 
     if (loading){
@@ -26,16 +26,26 @@ const ShopPage = () => {
                 justifyContent="center"
                 alignItems="center"
                 minHeight="90vh"
+                py={20}
             >
                 <Grid
                     container
-                    spacing={0}
+                    spacing={2}
+                    display="flex"
                     direction="row"
-                    alignItems="center"
+                    alignItems="stretch"
+                    // alignItems="stretch"
+
                     justifyContent="center"
+                    xs={12}
                 >
                     {products.map(p => (
-                        <Grid key={p.id} item xs={3}>
+                        <Grid key={p.id}
+                              item xs={4}
+                              display="flex"
+
+                              alignItems="center"
+                              justifyContent="center">
                             <Product key={p.id} product={p}/>
                         </Grid>
                     ))}

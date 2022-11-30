@@ -5,6 +5,7 @@ import App from './App';
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore";
 import "firebase/compat/auth"
+import "firebase/compat/storage"
 import {Provider} from "react-redux";
 import store from "./redux/store";
 import axios from "axios";

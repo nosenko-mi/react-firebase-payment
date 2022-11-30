@@ -17,7 +17,6 @@ import {STRIPE_ROUTE} from "../utils/routeConsts";
 const CheckoutCard = () => {
 
     const STRIPE_PAYMENT = "stripe"
-    const LIQPAY_PAYMENT = "liqpay"
     const navigate = useNavigate();
     const [paymentType, setPaymentType] = useState(STRIPE_PAYMENT)
     const initTotalState =  Dinero({ amount: 0, currency: "UAH" }).multiply(1)
@@ -63,27 +62,12 @@ const CheckoutCard = () => {
     }
 
     return (
-        <Card sx={{ minWidth: 200}}>
+        <Card sx={{ minWidth: 200, position: "sticky", top:102}}>
             <CardContent>
-
                 <Stack spacing={4}>
                     <Typography gutterBottom variant="h5" component="div">
                         Checkout
                     </Typography>
-
-                    {/*{cartItems.length > 0 ?*/}
-                    {/*    <Stack key={cartItems.keys().next().value}>*/}
-                    {/*        {cartItems.map(item =>(*/}
-                    {/*            <Typography key={item.name} variant="caption" color="text.secondary">*/}
-                    {/*                {item.name}: {item.price}*/}
-                    {/*            </Typography>*/}
-
-                    {/*            // <CartItem key={item.id} product={item}/>*/}
-                    {/*        ))}*/}
-                    {/*    </Stack>*/}
-                    {/*    :*/}
-                    {/*    <div>cart is empty</div>*/}
-                    {/*}*/}
 
                     {cartItems.length > 0 ?
                         <Stack key="left inner">
@@ -97,13 +81,14 @@ const CheckoutCard = () => {
 
                     <ToggleButtonGroup
                         value={paymentType}
-                        onChange={handlePaymentType}
+                        // onChange={handlePaymentType}
                         color="primary"
                         exclusive
                         aria-label="Platform"
+                        fullWidth="true"
                     >
                         <ToggleButton value={STRIPE_PAYMENT}>Stripe</ToggleButton>
-                        <ToggleButton value={LIQPAY_PAYMENT}>LiqPay</ToggleButton>
+                        {/*<ToggleButton value={LIQPAY_PAYMENT}>LiqPay</ToggleButton>*/}
                     </ToggleButtonGroup>
                 </Stack>
 

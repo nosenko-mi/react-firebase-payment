@@ -9,7 +9,7 @@ const Navbar = () => {
     const {auth} = useContext(Context)
     const [user] = useAuthState(auth)
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Toolbar variant={"dense"}>
                 <NavLink to={SHOP_ROUTE} style={{textDecoration: "none", color: "inherit"}}>
                     <Button size="small" variant="outlined"  color="inherit">Shop</Button>

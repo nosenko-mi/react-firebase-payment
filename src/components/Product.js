@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
-import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import React, {useContext, useState} from 'react';
+import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {addItem, removeItem} from "../redux/features/cart.feature";
+import {Context} from "../index";
 
 const Product = (props) => {
 
     const {product} = props
+
+    const{firebase} = useContext(Context)
+
 
     const dispatch = useDispatch()
 
@@ -16,6 +20,8 @@ const Product = (props) => {
 
     //works locally
     const [isInCart, setInCart] = useState(cartState.cartItems.some(p => p.id === product.id))
+
+    const [imageUrl, setImageUrl] = useState("")
 
     const handleClick = () => {
         //new
@@ -37,26 +43,40 @@ const Product = (props) => {
         }
 
     }
+    const storage = firebase.storage();
+    const imgReference = storage.ref(`fake_products/${product.id}.webp`);
+    imgReference.getDownloadURL()
+        .then((url) => {
+            setImageUrl(url)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 
     return (
-        <Card sx={{ maxWidth: 200 }}>
+        <Card sx={{ minHeight:300, maxWidth: 300}}>
             <CardContent>
-
-                <Typography gutterBottom variant="h5" component="div">
+                <CardMedia
+                    component="img"
+                    height="140"
+                    // image={imgUrl.toString()}
+                    src={imageUrl}
+                    alt={product.name}
+                />
+                <Typography  variant="h5" component="div">
                     {product.name}
                 </Typography>
 
-                <Typography variant="caption" color="text.secondary">
+                <Typography gutterBottom variant="caption" color="text.secondary">
                     {product.description}
                 </Typography>
 
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="h6" color="text.secondary">
                     {product.price/100} {product.currency}
                 </Typography>
 
             </CardContent>
             <CardActions>
-
                 {
                     cartState.cartItems.some(p => p.id === product.id) ?
                         <Button
@@ -68,7 +88,7 @@ const Product = (props) => {
                         >
                             In cart
                         </Button>
-                    :
+                        :
                         <Button
                             onClick={handleClick}
                             size="small"
@@ -79,9 +99,6 @@ const Product = (props) => {
                             Add to cart
                         </Button>
                 }
-
-
-
             </CardActions>
         </Card>
     );
