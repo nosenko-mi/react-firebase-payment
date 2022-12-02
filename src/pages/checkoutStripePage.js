@@ -96,13 +96,13 @@ const CheckoutStripePage = () => {
                                 <CheckoutForm />
                             </Elements>
                         )}
-                        <Divider/>
-                        <Typography variant="body2">
-                            Success card: 4242424242424242
-                        </Typography>
-                        <Typography variant="body2">
-                            Error card: 4000000000000002
-                        </Typography>
+                        {/*<Divider/>*/}
+                        {/*<Typography variant="body2">*/}
+                        {/*    Success card: 4242424242424242*/}
+                        {/*</Typography>*/}
+                        {/*<Typography variant="body2">*/}
+                        {/*    Error card: 4000000000000002*/}
+                        {/*</Typography>*/}
                     </Stack>
                 </Grid>
             </Box>

@@ -5,6 +5,7 @@ import baseUrl from "../index";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {clearCart} from "../redux/features/cart.feature";
+import {SUCCESS_ROUTE} from "../utils/routeConsts";
 
 
 export default function CheckoutForm() {
@@ -95,7 +96,7 @@ export default function CheckoutForm() {
                     setMessage("Payment succeeded!");
                     saveTransaction(paymentIntent).then()
                     dispatch(clearCart())
-                    navigate('/success')
+                    navigate(SUCCESS_ROUTE)
                     break;
                 case "processing":
                     setMessage("Your payment is processing.");
